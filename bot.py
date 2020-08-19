@@ -2,6 +2,22 @@ import config
 import telebot
 from telebot import apihelper
 import urllib.request 
+import pyodbc
+from datetime import datetime
+
+driver = 'DRIVER={SQL Server}'
+server = 'SERVER=dc-sql12-db\\db'
+db = 'DATABASE=Inventory'
+conn_str = ';'.join([driver, server, db])
+ 
+conn = pyodbc.connect(conn_str)
+cursor = conn.cursor()
+ 
+cursor.execute("SELECT * FROM dbo.main WHERE hostname = '90514-ws404' ")
+row = cursor.fetchone()
+rest_of_rows = cursor.fetchall()
+for item in rest_of_rows:
+   print(item)
 
 bot_kz = telebot.TeleBot(config.token)
 keyboard1 = telebot.types.ReplyKeyboardMarkup(True, True)
@@ -26,10 +42,10 @@ def send_text(message):
         bot_kz.send_message(message.chat.id, 'Прощай, ' + message.from_user.first_name)
    elif message.text.lower() == 'lol':
         bot_kz.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIB2V87sIDn8yqd9p3Davc-VXwIeFy7AAJGAAPb234AAVm5HRXjKXZ3GgQ')
-   elif message.text == 'photo':
+   elif message.text.lower() == 'photo':
         file = open('documents\\Photo.png', 'rb')
         bot_kz.send_photo(message.chat.id, file)
-   elif message.text == 'document':
+   elif message.text.lower() == 'document':
         file = open('documents\\file_10.xlsx', 'rb')
         bot_kz.send_document(message.chat.id, file)
 
