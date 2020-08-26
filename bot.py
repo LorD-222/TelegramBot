@@ -5,7 +5,6 @@ import urllib.request
 import pyodbc # для взаимодействия с БД
 import pandas as pd # для манипулирования данными и экспорта в виде электронных таблиц
 
-
 driver = 'DRIVER={SQL Server}'
 server = 'SERVER=dc-sql12-db\\db' # имя сервера
 db = 'DATABASE=Inventory' # имя БД
