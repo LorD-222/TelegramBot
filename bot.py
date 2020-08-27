@@ -1,7 +1,9 @@
-import config
-import telebot
+import config # Подключает конфиг
+from telebot import types # Импортируем типы из модуля, чтобы создавать кнопки
+import telebot # Подключаем модуль для Телеграма
 from telebot import apihelper
-import urllib.request 
+import urllib.request
+import openpyxl
 import pyodbc # для взаимодействия с БД
 import pandas as pd # для манипулирования данными и экспорта в виде электронных таблиц
 
@@ -21,14 +23,14 @@ writer = pd.ExcelWriter('documents\\example.xlsx') # создание файла
 df.to_excel(writer, sheet_name='bar') # Добавление данных из переменной с созданием листа
 writer.save() # сохранение
 
-bot_kz = telebot.TeleBot(config.token)
-keyboard1 = telebot.types.ReplyKeyboardMarkup(True, True)
-keyboard1.row('Привет', 'Пока')
-keyboard1.row('пошел', 'на')
+bot_kz = telebot.TeleBot(config.token) # Подключение токена для связи с ботом
+keyboard = telebot.types.ReplyKeyboardMarkup(True, True) # Меню в масадж-баре
+keyboard.row('Привет', 'Пока')
+keyboard.row('пошел', 'на')
 
 @bot_kz.message_handler(commands=['start']) # Реакция на команду /
 def start_message(message):
-    bot_kz.send_message(message.chat.id, 'Привет, надеюсь ты найдешь здесь чтонибудь полезное,' + message.from_user.first_name + ', или иди нахуй!', reply_markup=keyboard1)
+    bot_kz.send_message(message.chat.id, 'Привет, надеюсь ты найдешь здесь чтонибудь полезное,' + message.from_user.first_name + ', или иди нахуй!', reply_markup=keyboard)
 
 @bot_kz.message_handler(commands=['help'])  # Реакция на команду /
 def help_command(message):  
@@ -52,9 +54,9 @@ def send_text(message):
         bot_kz.send_document(message.chat.id, file)
 
 
-@bot_kz.message_handler(content_types=["document"]) # Документ
+@bot_kz.message_handler(content_types=["document"]) # Реакция на Документ
 def handle_docs_audio(message):
-    # Получим ID Стикера
+    # Получим ID документа
     document_id = message.document.file_id
     # Нужно получить путь, где лежит файл на Сервере Телеграмма
     file_info = bot_kz.get_file(document_id)
@@ -70,7 +72,7 @@ def handle_docs_audio(message):
     # Теперь формируем ссылку и скачивам файл
     urllib.request.urlretrieve(f'http://api.telegram.org/file/bot{config.token}/{file_info.file_path}', file_info.file_path)
 
-if __name__ == '__main__':
+if __name__ == '__main__': # постоянный опрос бота
     bot_kz.polling(none_stop=True)
 
 
