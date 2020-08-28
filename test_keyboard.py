@@ -1,4 +1,5 @@
 import config
+#from telebot import sendLocation
 # Подключаем модуль случайных чисел 
 import random
 # Подключаем модуль для Телеграма
@@ -37,7 +38,6 @@ def inline(c):
       but_9 = types.InlineKeyboardButton(text="Number9", callback_data="Number9")
       key.add(but_7, but_8, but_9)
       bot.send_message(c.message.chat.id, 'Это кнопка 4', reply_markup=key)
-
 
 if __name__ == '__main__': # постоянный опрос бота
     bot.polling(none_stop=True)
