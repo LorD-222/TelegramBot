@@ -19,8 +19,8 @@ def autor(chatid):
     return False
 
 ### Клавиатура
-keyboard1 = telebot.types.ReplyKeyboardMarkup()
-keyboard1.row('Привет', 'Пока', '/ip','/camera')
+keyboard1 = telebot.types.ReplyKeyboardMarkup(True, True)
+keyboard1.row('document','/start')
 
 @bot.message_handler(commands=['start'])
 def start_message(message):

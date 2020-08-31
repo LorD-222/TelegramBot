@@ -1,9 +1,7 @@
 import config # Подключает конфиг
 from telebot import types # Импортируем типы из модуля, чтобы создавать кнопки
-import telebot # Подключаем модуль для Телеграма
-from telebot import apihelper
-import urllib.request
-import openpyxl
+import telebot # Подключаем модуль Телеграма
+import urllib.request # Подключаем модуль для скачивания файлов
 import pyodbc # для взаимодействия с БД
 import pandas as pd # для манипулирования данными и экспорта в виде электронных таблиц
 
