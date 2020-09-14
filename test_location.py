@@ -8,6 +8,4 @@ bot = telebot.TeleBot(config.token, threaded=True)
 def location(message):
    bot.send_location(message.chat.id, latitude = '59.883431', longitude = '30.248957' )
 
-
-
 bot.polling()
