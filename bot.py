@@ -28,7 +28,7 @@ keyboard.row('пошел', 'на')
 
 @bot_kz.message_handler(commands=['start']) # Реакция на команду /
 def start_message(message):
-    bot_kz.send_message(message.chat.id, 'Привет, надеюсь ты найдешь здесь чтонибудь полезное,' + message.from_user.first_name + ', или иди нахуй!', reply_markup=keyboard)
+    bot_kz.send_message(message.chat.id, 'Привет, надеюсь ты найдешь здесь чтонибудь полезное!' + message.from_user.first_name , reply_markup=keyboard)
 
 @bot_kz.message_handler(commands=['help'])  # Реакция на команду /
 def help_command(message):  
@@ -55,11 +55,13 @@ def send_text(message):
 @bot_kz.message_handler(content_types=["document"]) # Реакция на Документ
 def handle_docs_audio(message):
     # Получим ID документа
-    document_id = message.document.file_id
+    document_id = message.document.file_id 
+    # получить путь и имя файла
+    name = 'documents/' + message.document.file_name
     # Нужно получить путь, где лежит файл на Сервере Телеграмма
     file_info = bot_kz.get_file(document_id)
     # Теперь формируем ссылку и скачивам файл
-    urllib.request.urlretrieve(f'http://api.telegram.org/file/bot{config.token}/{file_info.file_path}', file_info.file_path)
+    urllib.request.urlretrieve(f'http://api.telegram.org/file/bot{config.token}/{file_info.file_path}', name)
 
 @bot_kz.message_handler(content_types=["sticker"]) # Скачать стикер
 def handle_docs_audio(message):
