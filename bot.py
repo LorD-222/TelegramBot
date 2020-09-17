@@ -54,10 +54,23 @@ def send_text(message):
 
 @bot_kz.message_handler(content_types=["document"]) # Реакция на Документ
 def handle_docs_audio(message):
+    print(message)
+    print(message.caption)
+    doc = message.caption.lower()
+    pars = doc.rsplit()
+    base = pars[0]
+    usl = pars[1]
+    if base.lower() == "база":
+        if usl.lower() == "пк":
+            name = 'WS/' + message.document.file_name
+        elif usl.lower() == "монитор":
+            name = 'Monitor/' + message.document.file_name
+        elif usl.lower() == "все":
+            name = 'All/' + message.document.file_name
+        elif usl.lower() == "другое":
+            name = 'Other/' + message.document.file_name
     # Получим ID документа
     document_id = message.document.file_id 
-    # получить путь и имя файла
-    name = 'documents/' + message.document.file_name
     # Нужно получить путь, где лежит файл на Сервере Телеграмма
     file_info = bot_kz.get_file(document_id)
     # Теперь формируем ссылку и скачивам файл
