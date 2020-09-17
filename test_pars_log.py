@@ -20,7 +20,7 @@ def send_text(message):
                spisok = spisok + split
          pass # do something
    print(spisok[0:5])
-   bot.send_message(message.chat.id, f"{spisok[0:5]}\n{spisok[5:10]}")
+   bot.send_message(message.chat.id, f"{spisok[0:5]}\n{spisok[5:10]}\n{spisok[10:15]}\n{spisok[15:20]}\n{spisok[20:25]}")
 
         
    
